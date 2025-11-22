@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Cerchio meditazione -->
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#8B9D83" stroke-width="2" opacity="0.3"/>
+  <circle cx="50" cy="50" r="30" fill="none" stroke="#8B9D83" stroke-width="2" opacity="0.5"/>
+  <circle cx="50" cy="50" r="20" fill="none" stroke="#8B9D83" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Centro - punto zen -->
+  <circle cx="50" cy="50" r="6" fill="#8B9D83"/>
+  
+  <!-- Foglia stilizzata (crescita) -->
+  <path d="M 50 30 Q 60 35 60 45 Q 60 50 50 50" 
+        fill="none" stroke="#8B9D83" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 50 30 Q 40 35 40 45 Q 40 50 50 50" 
+        fill="none" stroke="#8B9D83" stroke-width="2" stroke-linecap="round"/>
+</svg>

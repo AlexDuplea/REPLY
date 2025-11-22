@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiche - WeMind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="stats-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="/" class="back-btn">← Indietro</a>
+            <h1 class="logo">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="WeMind" class="logo-img">
+                WeMind
+            </h1>
+        </div>
+        
+        <div class="header-right">
+            <div class="streak-badge">
+                🔥 <span class="streak-number">{{ streak }}</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="stats-main">
+        <div class="stats-container">
+            <h1 class="page-title">📊 Le Tue Statistiche</h1>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="currentStreak">{{ stats.current_streak }}</div>
+                    <div class="stat-label">Streak Corrente</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="longestStreak">{{ stats.longest_streak }}</div>
+                    <div class="stat-label">Streak Più Lungo</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-value" id="totalEntries">{{ stats.total_entries }}</div>
+                    <div class="stat-label">Totale Entries</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="avgPerWeek">-</div>
+                    <div class="stat-label">Media/Settimana</div>
+                </div>
+            </div>
+
+            <!-- Sentiment Charts -->
+            <div class="charts-section">
+                <h2 class="section-title">📈 Andamento Emotivo</h2>
+                
+                <div class="charts-grid">
+                    <!-- Stress Chart -->
+                    <div class="chart-card">
+                        <h3>Livello Stress</h3>
+                        <canvas id="stressChart"></canvas>
+                    </div>
+                    
+                    <!-- Happiness Chart -->
+                    <div class="chart-card">
+                        <h3>Felicità</h3>
+                        <canvas id="happinessChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <!-- Energy Chart -->
+                    <div class="chart-card">
+                        <h3>Energia</h3>
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                    
+                    <!-- Overall Sentiment -->
+                    <div class="chart-card">
+                        <h3>Sentiment Generale</h3>
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Milestones -->
+            {% if milestones %}
+            <div class="milestones-section">
+                <h2 class="section-title">🏆 Milestone Raggiunte</h2>
+                <div class="milestones-grid">
+                    {% for milestone in milestones %}
+                    <div class="milestone-badge">
+                        <span class="milestone-icon">✓</span>
+                        <span class="milestone-name">{{ milestone }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Activity Calendar -->
+            <div class="calendar-section">
+                <h2 class="section-title">📅 Calendario Attività</h2>
+                <div class="activity-calendar" id="activityCalendar">
+                    <!-- Will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+</body>
+</html>

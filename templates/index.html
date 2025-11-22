@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeMind - Mental Wellness Journal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="logo">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="WeMind" class="logo-img">
+                WeMind
+            </h1>
+        </div>
+
+        <div class="header-center">
+            <button class="wellness-btn" id="wellnessBtn">
+                <img src="{{ url_for('static', filename='images/wellness-icon.svg') }}" alt="Wellness" class="wellness-icon">
+                Wellness
+            </button>
+        </div>
+
+        <div class="header-right">
+            <div class="streak-badge">
+                🔥 <span class="streak-number" id="streakNumber">{{ streak }}</span>
+            </div>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- EDITOR MODE (default) -->
+        <div class="editor-container" id="editorMode">
+            <div class="date-badge">
+                <span class="date-icon">📅</span>
+                <span class="date-text">{{ date }}</span>
+            </div>
+
+            <div class="editor-wrapper">
+                <textarea
+                    class="journal-editor"
+                    id="journalEditor"
+                    placeholder="Come è andata oggi? Scrivi liberamente i tuoi pensieri..."
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+            <div class="editor-footer">
+                <div class="word-count" id="wordCount">0 parole</div>
+                <button class="save-btn" id="saveBtn">Salva</button>
+            </div>
+        </div>
+
+        <!-- CHAT MODE (hidden by default) -->
+        <div class="chat-container" id="chatMode" style="display: none;">
+            <div class="chat-header">
+                <h2>💬 Chat con AI</h2>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added here dynamically -->
+            </div>
+
+            <div class="chat-input-container">
+                <input
+                    type="text"
+                    class="chat-input"
+                    id="chatInput"
+                    placeholder="Scrivi il tuo messaggio..."
+                />
+                <button class="chat-send-btn" id="chatSendBtn">Invia</button>
+            </div>
+        </div>
+
+        <!-- Chat Toggle Button (floating) -->
+        <button class="chat-toggle" id="chatToggle" title="Attiva Chat Mode">
+            💬
+        </button>
+    </main>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <h2>Menu</h2>
+            <button class="close-menu" id="closeMenu">✕</button>
+        </div>
+
+        <nav class="menu-nav">
+            <a href="#" class="menu-item" data-action="calendar">
+                <span class="menu-icon">📅</span>
+                <span class="menu-text">Calendario</span>
+            </a>
+            <a href="#" class="menu-item" data-action="stats">
+                <span class="menu-icon">📊</span>
+                <span class="menu-text">Statistiche</span>
+            </a>
+            <a href="#" class="menu-item" data-action="entries">
+                <span class="menu-icon">📖</span>
+                <span class="menu-text">Vecchi Log</span>
+            </a>
+            <a href="#" class="menu-item" data-action="settings">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Impostazioni</span>
+            </a>
+        </nav>
+
+        <!-- Mini Calendar Preview -->
+        <div class="calendar-preview" id="calendarPreview">
+            <h3>Novembre 2025</h3>
+            <div class="mini-calendar" id="miniCalendar">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Wellness Modal -->
+    <div class="wellness-modal" id="wellnessModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeWellness">✕</button>
+
+            <h2>Suggerimenti per il Benessere</h2>
+
+            <div class="wellness-loading" id="wellnessLoading">
+                <div class="loading-spinner"></div>
+                <p>Sto analizzando i tuoi log...</p>
+            </div>
+
+            <div class="wellness-content" id="wellnessContent" style="display: none;">
+                <div class="wellness-summary" id="wellnessSummary">
+                    <!-- AI summary will go here -->
+                </div>
+
+                <div class="wellness-suggestions" id="wellnessSuggestions">
+                    <!-- AI suggestions will go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entries List Modal -->
+    <div class="entries-modal" id="entriesModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeEntries">✕</button>
+
+            <h2>📖 I Tuoi Log</h2>
+
+            <div class="entries-list" id="entriesList">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="stats-modal" id="statsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeStats">✕</button>
+
+            <h2>📊 Le Tue Statistiche</h2>
+
+            <div class="stats-content" id="statsContent">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
