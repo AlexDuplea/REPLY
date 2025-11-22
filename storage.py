@@ -135,11 +135,28 @@ class Storage:
         filename = f"conversation_{entry_date}.json"
         filepath = os.path.join(config.CONVERSATIONS_DIR, filename)
 
-        data = {
-            "date": entry_date,
-            "timestamp": datetime.now().isoformat(),
-            "messages": conversation
-        }
+        # Se esiste già una conversazione oggi, aggiungi invece di sovrascrivere
+        existing_data = None
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+
+        if existing_data:
+            # Aggiungi le nuove conversazioni a quelle esistenti
+            data = {
+                "date": entry_date,
+                "timestamp": datetime.now().isoformat(),
+                "messages": existing_data["messages"] + conversation,
+                "sessions": existing_data.get("sessions", 1) + 1
+            }
+        else:
+            # Prima conversazione della giornata
+            data = {
+                "date": entry_date,
+                "timestamp": datetime.now().isoformat(),
+                "messages": conversation,
+                "sessions": 1
+            }
 
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
@@ -162,6 +179,7 @@ class Storage:
                    entry_date: Optional[str] = None):
         """
         Salva un log giornaliero narrativo generato dall'AI
+        Se esiste già un entry per oggi, lo sovrascrive (perché sarà già stato combinato)
         """
         if entry_date is None:
             entry_date = date.today().isoformat()
@@ -189,6 +207,18 @@ class Storage:
 
         with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
+    
+    def get_today_entry_text(self) -> Optional[str]:
+        """
+        Ottiene il testo del log di oggi se esiste
+        Returns: Il testo del log o None se non esiste
+        """
+        today = date.today().isoformat()
+        entry_data = self.load_entry(today)
+        
+        if entry_data:
+            return entry_data.get("entry")
+        return None
 
     def get_recent_entries(self, num_days: int = 7) -> List[Dict]:
         """Ottiene gli ultimi N giorni di entries"""
