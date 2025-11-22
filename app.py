@@ -69,9 +69,18 @@ def save_entry():
         if not content:
             return jsonify({'error': 'Contenuto vuoto'}), 400
 
-        # Salva entry
+        # Controlla se esiste già un log oggi
         today = date.today().isoformat()
-        storage.save_entry(content, metadata={'source': 'editor'}, entry_date=today)
+        existing_log = storage.get_today_entry_text()
+
+        # Se esiste già un log, aggiungi il nuovo contenuto
+        if existing_log:
+            # Aggiungi una separazione e il nuovo contenuto
+            combined_content = existing_log + "\n\n" + content
+            storage.save_entry(combined_content, metadata={'source': 'editor'}, entry_date=today)
+        else:
+            # Primo log della giornata
+            storage.save_entry(content, metadata={'source': 'editor'}, entry_date=today)
 
         # Aggiorna streak
         streak_info = storage.update_streak()
@@ -150,12 +159,16 @@ def send_chat_message():
         # Aggiorna sessione
         session['chat_history'] = agent.get_conversation_history()
 
-        # Se la conversazione è terminata, genera entry
+        # Se la conversazione ÃƒÂ¨ terminata, genera entry
         if result['should_end'] and not result['crisis_detected']:
-            journal_entry = agent.generate_journal_entry()
+            # Controlla se esiste giÃƒÂ  un log oggi
+            today = date.today().isoformat()
+            existing_log = storage.get_today_entry_text()
+
+            # Genera entry (combinando con quello esistente se presente)
+            journal_entry = agent.generate_journal_entry(existing_entry=existing_log)
 
             # Salva
-            today = date.today().isoformat()
             emotions = agent.extract_emotions()
             storage.save_entry(journal_entry, metadata={'source': 'chat', 'emotions_detected': emotions},
                                entry_date=today)
@@ -179,6 +192,50 @@ def send_chat_message():
             'response': result['response'],
             'should_end': result['should_end'],
             'crisis_detected': result.get('crisis_detected', False)
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/chat/close', methods=['POST'])
+def close_chat():
+    """
+    Chiude la chat e salva automaticamente il journal entry
+    Returns: { "journal_entry": "...", "streak": ... }
+    """
+    try:
+        # Ricrea agente con history dalla sessione
+        agent = MentalWellnessAgent()
+
+        if 'chat_history' not in session:
+            return jsonify({'error': 'Nessuna sessione chat attiva'}), 400
+
+        agent.conversation_history = session['chat_history']
+        agent.session_started = True
+
+        # Controlla se esiste già un log oggi
+        today = date.today().isoformat()
+        existing_log = storage.get_today_entry_text()
+
+        # Genera entry (combinando con quello esistente se presente)
+        journal_entry = agent.generate_journal_entry(existing_entry=existing_log)
+
+        # Salva
+        emotions = agent.extract_emotions()
+        storage.save_entry(journal_entry, metadata={'source': 'chat', 'emotions_detected': emotions},
+                           entry_date=today)
+        storage.save_conversation(agent.get_conversation_history(), today)
+
+        # Aggiorna streak
+        streak_info = storage.update_streak()
+
+        session['chat_active'] = False
+
+        return jsonify({
+            'success': True,
+            'journal_entry': journal_entry,
+            'streak': streak_info['current_streak']
         })
 
     except Exception as e:
@@ -382,9 +439,9 @@ def _build_context_from_entries(entries: list) -> str:
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("🌟 Mental Wellness Journal - Web App")
+    print("ðŸŒŸ Mental Wellness Journal - Web App")
     print("=" * 60)
-    print("\n📱 Server avviato su: http://localhost:5000")
-    print("🔒 Premi CTRL+C per fermare\n")
+    print("\nðŸ“± Server avviato su: http://localhost:5000")
+    print("ðŸ”’ Premi CTRL+C per fermare\n")
 
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -14,7 +14,7 @@ const elements = {
     journalEditor: document.getElementById('journalEditor'),
     wordCount: document.getElementById('wordCount'),
     saveBtn: document.getElementById('saveBtn'),
-    
+
     // Chat
     chatMode: document.getElementById('chatMode'),
     chatToggle: document.getElementById('chatToggle'),
@@ -22,7 +22,7 @@ const elements = {
     chatMessages: document.getElementById('chatMessages'),
     chatInput: document.getElementById('chatInput'),
     chatSendBtn: document.getElementById('chatSendBtn'),
-    
+
     // Wellness
     wellnessBtn: document.getElementById('wellnessBtn'),
     wellnessModal: document.getElementById('wellnessModal'),
@@ -31,18 +31,18 @@ const elements = {
     wellnessSummary: document.getElementById('wellnessSummary'),
     wellnessSuggestions: document.getElementById('wellnessSuggestions'),
     closeWellness: document.getElementById('closeWellness'),
-    
+
     // Menu
     menuBtn: document.getElementById('menuBtn'),
     sideMenu: document.getElementById('sideMenu'),
     closeMenu: document.getElementById('closeMenu'),
-    
+
     // Modals
     entriesModal: document.getElementById('entriesModal'),
     statsModal: document.getElementById('statsModal'),
     closeEntries: document.getElementById('closeEntries'),
     closeStats: document.getElementById('closeStats'),
-    
+
     // Other
     overlay: document.getElementById('overlay'),
     toast: document.getElementById('toast'),
@@ -54,7 +54,7 @@ const elements = {
 function showToast(message, type = 'success') {
     elements.toast.textContent = message;
     elements.toast.className = `toast show ${type}`;
-    
+
     setTimeout(() => {
         elements.toast.classList.remove('show');
     }, 3000);
@@ -80,16 +80,16 @@ elements.journalEditor.addEventListener('input', updateWordCount);
 
 elements.saveBtn.addEventListener('click', async () => {
     const content = elements.journalEditor.value.trim();
-    
+
     if (!content) {
         showToast('Scrivi qualcosa prima di salvare!', 'error');
         return;
     }
-    
+
     // Disable button
     elements.saveBtn.disabled = true;
     elements.saveBtn.textContent = 'Salvando...';
-    
+
     try {
         const response = await fetch('/api/save-entry', {
             method: 'POST',
@@ -98,28 +98,28 @@ elements.saveBtn.addEventListener('click', async () => {
             },
             body: JSON.stringify({ content })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
             showToast('✓ Entry salvato!', 'success');
-            
+
             // Update streak
             elements.streakNumber.textContent = data.streak;
-            
+
             // Check for milestone
             if (data.new_milestone) {
                 showMilestoneAnimation(data.new_milestone);
             }
-            
+
             // Clear editor
             elements.journalEditor.value = '';
             updateWordCount();
-            
+
             // Success animation
             elements.saveBtn.textContent = '✓ Salvato!';
             elements.saveBtn.style.background = 'var(--accent-green)';
-            
+
             setTimeout(() => {
                 elements.saveBtn.textContent = 'Salva';
                 elements.saveBtn.style.background = '';
@@ -162,22 +162,22 @@ async function startChatMode() {
     elements.chatMode.style.display = 'flex';
     elements.chatToggle.classList.add('active');
     elements.chatToggle.textContent = '✕';
-    
+
     state.currentMode = 'chat';
     state.chatActive = true;
-    
+
     // Clear previous messages
     elements.chatMessages.innerHTML = '';
     state.chatMessages = [];
-    
+
     // Start chat session with AI
     try {
         const response = await fetch('/api/chat/start', {
             method: 'POST'
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
             addChatMessage('assistant', data.message);
         }
@@ -192,7 +192,7 @@ function closeChatMode() {
     elements.chatMode.style.display = 'none';
     elements.chatToggle.classList.remove('active');
     elements.chatToggle.textContent = '💬';
-    
+
     state.currentMode = 'editor';
     state.chatActive = false;
 }
@@ -200,23 +200,23 @@ function closeChatMode() {
 function addChatMessage(role, content) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${role}`;
-    
+
     const iconDiv = document.createElement('div');
     iconDiv.className = 'message-icon';
     iconDiv.textContent = role === 'assistant' ? '🤖' : '👤';
-    
+
     const bubbleDiv = document.createElement('div');
     bubbleDiv.className = 'message-bubble';
     bubbleDiv.textContent = content;
-    
+
     messageDiv.appendChild(iconDiv);
     messageDiv.appendChild(bubbleDiv);
-    
+
     elements.chatMessages.appendChild(messageDiv);
-    
+
     // Scroll to bottom
     elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
-    
+
     state.chatMessages.push({ role, content });
 }
 
@@ -230,19 +230,19 @@ elements.chatInput.addEventListener('keypress', (e) => {
 
 async function sendChatMessage() {
     const message = elements.chatInput.value.trim();
-    
+
     if (!message) return;
-    
+
     // Add user message to UI
     addChatMessage('user', message);
-    
+
     // Clear input
     elements.chatInput.value = '';
-    
+
     // Disable input while waiting
     elements.chatInput.disabled = true;
     elements.chatSendBtn.disabled = true;
-    
+
     try {
         const response = await fetch('/api/chat/message', {
             method: 'POST',
@@ -251,24 +251,24 @@ async function sendChatMessage() {
             },
             body: JSON.stringify({ message })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
             // Add AI response
             addChatMessage('assistant', data.response);
-            
+
             // Check if conversation ended
             if (data.should_end) {
                 if (data.journal_entry) {
                     // Show generated journal entry
                     showToast('Diario generato!', 'success');
-                    
+
                     // Update streak
                     if (data.streak) {
                         elements.streakNumber.textContent = data.streak;
                     }
-                    
+
                     // Show journal entry in a modal or editor
                     setTimeout(() => {
                         closeChatMode();
@@ -296,15 +296,15 @@ elements.closeWellness.addEventListener('click', closeWellnessMode);
 async function openWellnessMode() {
     elements.wellnessModal.classList.add('active');
     showOverlay();
-    
+
     // Show loading
     elements.wellnessLoading.style.display = 'block';
     elements.wellnessContent.style.display = 'none';
-    
+
     try {
         const response = await fetch('/api/wellness/suggestions');
         const data = await response.json();
-        
+
         if (data.success) {
             displayWellnessSuggestions(data);
         }
@@ -318,10 +318,10 @@ function displayWellnessSuggestions(data) {
     // Hide loading, show content
     elements.wellnessLoading.style.display = 'none';
     elements.wellnessContent.style.display = 'block';
-    
+
     // Display summary
     elements.wellnessSummary.innerHTML = `<p>${data.summary}</p>`;
-    
+
     // Display suggestions (senza icone)
     elements.wellnessSuggestions.innerHTML = '';
 

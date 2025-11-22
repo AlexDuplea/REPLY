@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-08",
+  "timestamp": "2025-11-08T20:16:00",
+  "entry": "Oggi mi sono sentito ansioso senza un motivo particolare. Ho provato a fare meditazione e mi ha aiutato un po'.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 4,
+      "happiness": 3,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 3
+    },
+    "message_count": 7
+  }
+}

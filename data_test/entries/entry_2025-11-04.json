@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-04",
+  "timestamp": "2025-11-04T20:51:00",
+  "entry": "Giornata normale. Lezioni all'universita, studio, palestra. Routine che mi fa sentire stabile anche se a volte monotona.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 3,
+      "happiness": 2,
+      "sadness": 2,
+      "anger": 2,
+      "fatigue": 4
+    },
+    "message_count": 5
+  }
+}

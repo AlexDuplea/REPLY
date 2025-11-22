@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-03",
+  "timestamp": "2025-11-03T20:48:00",
+  "entry": "Oggi mi sono svegliato con poca energia. Ho provato a studiare ma ero troppo stanco. Nel pomeriggio sono andato in palestra e mi ha aiutato.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 3,
+      "happiness": 4,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 3
+    },
+    "message_count": 9
+  }
+}

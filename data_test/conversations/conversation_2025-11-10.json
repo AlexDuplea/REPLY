@@ -1,0 +1,47 @@
+{
+  "date": "2025-11-10",
+  "timestamp": "2025-11-10T19:53:00",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! Bentornato! Come e andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Non benissimo, ero molto ansioso per l'esame di domani."
+    },
+    {
+      "role": "assistant",
+      "content": "Mi dispiace che tu ti sia sentito ansioso. E l'esame che ti preoccupa o c'e altro?"
+    },
+    {
+      "role": "user",
+      "content": "E un esame difficile e ho paura di non essere preparato abbastanza."
+    },
+    {
+      "role": "assistant",
+      "content": "L'ansia pre-esame e molto comune. Hai avuto modo di studiare come volevi?"
+    },
+    {
+      "role": "user",
+      "content": "Ho studiato tanto ma sento sempre che non basta."
+    },
+    {
+      "role": "assistant",
+      "content": "Capisco. A volte la sensazione di non essere mai abbastanza preparati e la nostra mente che esagera. Cosa hai fatto per gestire l'ansia?"
+    },
+    {
+      "role": "user",
+      "content": "Ho provato a studiare di piu ma ero troppo agitato. Poi ho fatto una camminata."
+    },
+    {
+      "role": "assistant",
+      "content": "La camminata e stata una scelta saggia. Quando siamo ansiosi, continuare a studiare puo essere controproducente. Come ti sei sentito dopo?"
+    },
+    {
+      "role": "user",
+      "content": "Un po' meglio, ma l'ansia e ancora li."
+    }
+  ],
+  "sessions": 1
+}

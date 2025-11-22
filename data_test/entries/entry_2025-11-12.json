@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-12",
+  "timestamp": "2025-11-12T20:35:00",
+  "entry": "Ottima giornata! Ho superato l'esame difficile che mi preoccupava tanto. Sono felicissimo e orgoglioso di me stesso.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 1,
+      "happiness": 4,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 2
+    },
+    "message_count": 9
+  }
+}

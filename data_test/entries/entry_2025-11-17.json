@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-17",
+  "timestamp": "2025-11-17T20:01:00",
+  "entry": "Giornata difficile. Troppo stress con l'universita e gli esami in arrivo. Ho studiato fino a tardi ma non riesco a concentrarmi come vorrei.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 4,
+      "happiness": 2,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 3
+    },
+    "message_count": 11
+  }
+}

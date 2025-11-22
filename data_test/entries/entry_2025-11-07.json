@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-07",
+  "timestamp": "2025-11-07T20:14:00",
+  "entry": "Giornata tranquilla. Ho studiato per l'esame di algoritmi, fatto un po' di esercizio fisico e cucinato qualcosa di buono. Mi sento sereno.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 3,
+      "happiness": 3,
+      "sadness": 0,
+      "anger": 1,
+      "fatigue": 2
+    },
+    "message_count": 10
+  }
+}
