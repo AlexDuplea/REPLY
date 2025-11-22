@@ -165,33 +165,79 @@ class MentalWellnessAgent:
 3. Chiedi conferma per salvare il log giornaliero
 """
 
-    def generate_journal_entry(self) -> str:
+    def generate_journal_entry(self, existing_entry: Optional[str] = None) -> str:
         """
         Genera un log giornaliero narrativo dalla conversazione
+        
+        Args:
+            existing_entry: Log esistente della giornata (se presente)
 
         Returns:
             Testo narrativo del diario
         """
+        # Conta quanti messaggi reali ha scritto l'utente (escluso "fine")
+        user_messages = [msg for msg in self.conversation_history 
+                        if msg["role"] == "user" and msg["content"].lower().strip() not in ["fine", "basta", "stop", "termina"]]
+        
+        num_user_messages = len(user_messages)
+        
+        # Calcola lunghezza target basata sulla conversazione
+        if num_user_messages <= 2:
+            target_words = "20-30"
+            max_tokens = 80
+        elif num_user_messages <= 4:
+            target_words = "40-60"
+            max_tokens = 120
+        elif num_user_messages <= 7:
+            target_words = "80-100"
+            max_tokens = 180
+        else:
+            target_words = "120-150"
+            max_tokens = 250
+        
         # Prepara prompt per generazione log
-        prompt = """Basandoti sulla conversazione che abbiamo avuto, genera un log di diario in prima persona.
+        if existing_entry:
+            # C'è già un log oggi - aggiorna combinando vecchio e nuovo
+            prompt = f"""Hai già scritto questo log oggi:
 
-Requisiti:
+"{existing_entry}"
+
+Ora, basandoti sulla NUOVA conversazione che abbiamo appena avuto, aggiorna il log combinando le informazioni.
+
+REGOLE CRITICHE:
+- Mantieni tutto ciò che era nel log precedente
+- Aggiungi SOLO le nuove informazioni dalla conversazione appena conclusa
+- Scrivi in prima persona (uso "io", "mi sono sentito", ecc.)
+- Lunghezza totale TARGET: {target_words} parole (MASSIMO)
+- USA SOLO informazioni ESPLICITAMENTE menzionate
+- NON inventare dettagli o emozioni non dette
+- Stile: semplice, diretto, cronologico
+
+Genera il log aggiornato che include sia il contenuto precedente che le nuove informazioni:
+"""
+        else:
+            # Primo log della giornata
+            prompt = f"""Basandoti SOLO sulla conversazione che abbiamo avuto, genera un log di diario in prima persona.
+
+REGOLE CRITICHE:
 - Scrivi dal punto di vista dell'utente (usa "io", "mi sono sentito", ecc.)
-- Stile narrativo, fluido e naturale
-- Includi emozioni, eventi e riflessioni emerse
-- Lunghezza: 150-250 parole
-- Non menzionare che questo è un riassunto AI
-- Non usare elenchi puntati, scrivi in forma narrativa
+- Lunghezza TARGET: {target_words} parole (MASSIMO)
+- USA SOLO informazioni ESPLICITAMENTE menzionate dall'utente
+- NON inventare dettagli, emozioni o riflessioni non dette
+- NON aggiungere interpretazioni psicologiche
+- NON espandere o elaborare oltre ciò che è stato detto
+- Se l'utente ha scritto poco, il log DEVE essere molto breve
+- Stile: semplice, diretto, fedele alle parole dell'utente
 
-Esempio di stile:
-"Oggi è stata una giornata intensa. Mi sono svegliato sentendomi già stanco, probabilmente per il poco sonno della notte scorsa. Al lavoro ho dovuto gestire una scadenza importante, e questo mi ha messo sotto pressione. Tuttavia, sono riuscito a completare il progetto e questo mi ha dato una certa soddisfazione..."
+Esempio per conversazione BREVE (2-3 messaggi):
+"Oggi è andata tutto bene. Ho fatto una challenge di programmazione che mi è piaciuta."
 
-Ora genera il log basandoti sulla nostra conversazione:
+Ora genera il log basandoti SOLO su ciò che l'utente ha effettivamente scritto:
 """
 
         # Crea una nuova conversazione solo per questo task
         messages = [
-            {"role": "system", "content": "Sei un assistente che aiuta a scrivere diari personali in prima persona."},
+            {"role": "system", "content": "Sei un assistente che trascrive fedelmente ciò che l'utente ha detto, senza aggiungere nulla. Sii MOLTO conciso e letterale."},
             {"role": "user",
              "content": f"Ecco la conversazione:\n\n{self._format_conversation_for_summary()}\n\n{prompt}"}
         ]
@@ -200,8 +246,8 @@ Ora genera il log basandoti sulla nostra conversazione:
             response = self.client.chat.completions.create(
                 model=config.MODEL_NAME,
                 messages=messages,
-                max_tokens=400,
-                temperature=0.7
+                max_tokens=max_tokens,
+                temperature=0.3  # Ridotta per essere più fedele
             )
 
             return response.choices[0].message.content.strip()

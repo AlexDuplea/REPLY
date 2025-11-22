@@ -80,6 +80,11 @@ class TerminalInterface:
         # Stats e streak
         self.print_stats()
         self.update_and_show_streak()
+        
+        # Controlla se c'è già un log oggi
+        existing_log = self.storage.get_today_entry_text()
+        if existing_log:
+            print(f"{config.Colors.OKCYAN}ℹ️  Hai già scritto un log oggi. Le nuove informazioni verranno aggiunte.{config.Colors.ENDC}\n")
 
         # Nome utente
         user_name = self.get_user_name()
@@ -152,8 +157,11 @@ class TerminalInterface:
         print("\n" + "-" * 60)
         print("📝 Generazione log giornaliero...\n")
 
-        # Genera entry narrativo
-        journal_entry = self.agent.generate_journal_entry()
+        # Controlla se esiste già un log oggi
+        existing_log = self.storage.get_today_entry_text()
+        
+        # Genera entry narrativo (combinando con quello esistente se presente)
+        journal_entry = self.agent.generate_journal_entry(existing_entry=existing_log)
 
         print(f"{config.Colors.BOLD}Il tuo diario di oggi:{config.Colors.ENDC}\n")
         print(f"{config.Colors.OKCYAN}{journal_entry}{config.Colors.ENDC}\n")
