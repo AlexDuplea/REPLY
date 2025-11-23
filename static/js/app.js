@@ -86,16 +86,13 @@ elements.saveBtn.addEventListener('click', async () => {
         return;
     }
 
-    // Disable button
     elements.saveBtn.disabled = true;
     elements.saveBtn.textContent = 'Salvando...';
 
     try {
         const response = await fetch('/api/save-entry', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content })
         });
 
@@ -108,15 +105,11 @@ elements.saveBtn.addEventListener('click', async () => {
             elements.streakNumber.textContent = data.streak;
 
             // Check for milestone
-            if (data.new_milestone) {
-                showMilestoneAnimation(data.new_milestone);
-            }
+            if (data.new_milestone) showMilestoneAnimation(data.new_milestone);
 
-            // Clear editor
-            elements.journalEditor.value = '';
+            // **Non cancelliamo l'editor, lasciamo il testo**
             updateWordCount();
 
-            // Success animation
             elements.saveBtn.textContent = '✓ Salvato!';
             elements.saveBtn.style.background = 'var(--accent-green)';
 
@@ -140,24 +133,23 @@ elements.saveBtn.addEventListener('click', async () => {
 
 function showMilestoneAnimation(milestone) {
     // TODO: Implement confetti or celebration animation
-    showToast(`🎉 Milestone raggiunta: ${milestone.name}!`, 'success');
+    showToast(`Milestone raggiunta: ${milestone.name}!`, 'success');
 }
 
 // ===== CHAT MODE =====
 
-elements.chatToggle.addEventListener('click', toggleChatMode);
-elements.closeChat.addEventListener('click', closeChatMode);
-
-async function toggleChatMode() {
+elements.chatToggle.addEventListener('click', () => {
     if (state.currentMode === 'editor') {
-        await startChatMode();
+        startChatMode();
     } else {
+        // La ✕ chiude la chat senza bisogno di scrivere "fine"
         closeChatMode();
     }
-}
+});
+
+elements.closeChat.addEventListener('click', closeChatMode);
 
 async function startChatMode() {
-    // Hide editor, show chat
     elements.editorMode.style.display = 'none';
     elements.chatMode.style.display = 'flex';
     elements.chatToggle.classList.add('active');
@@ -166,24 +158,20 @@ async function startChatMode() {
     state.currentMode = 'chat';
     state.chatActive = true;
 
-    // Clear previous messages
     elements.chatMessages.innerHTML = '';
     state.chatMessages = [];
 
-    // Start chat session with AI
     try {
-        const response = await fetch('/api/chat/start', {
-            method: 'POST'
-        });
-
+        const response = await fetch('/api/chat/start', { method: 'POST' });
         const data = await response.json();
 
-        if (data.success) {
-            addChatMessage('assistant', data.message);
-        }
+        if (data.success) addChatMessage('assistant', data.message);
     } catch (error) {
         console.error('Error starting chat:', error);
         showToast('Errore avvio chat', 'error');
+    } finally {
+        // Focus input after chat starts
+        setTimeout(() => elements.chatInput.focus(), 100);
     }
 }
 
@@ -213,8 +201,6 @@ function addChatMessage(role, content) {
     messageDiv.appendChild(bubbleDiv);
 
     elements.chatMessages.appendChild(messageDiv);
-
-    // Scroll to bottom
     elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
 
     state.chatMessages.push({ role, content });
@@ -230,55 +216,47 @@ elements.chatInput.addEventListener('keypress', (e) => {
 
 async function sendChatMessage() {
     const message = elements.chatInput.value.trim();
-
     if (!message) return;
 
-    // Add user message to UI
     addChatMessage('user', message);
-
-    // Clear input
     elements.chatInput.value = '';
-
-    // Disable input while waiting
     elements.chatInput.disabled = true;
     elements.chatSendBtn.disabled = true;
+
+    // Show typing indicator
+    showTypingIndicator();
 
     try {
         const response = await fetch('/api/chat/message', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message })
         });
 
         const data = await response.json();
 
+        // Remove typing indicator
+        removeTypingIndicator();
+
         if (data.success) {
-            // Add AI response
             addChatMessage('assistant', data.response);
 
-            // Check if conversation ended
-            if (data.should_end) {
-                if (data.journal_entry) {
-                    // Show generated journal entry
-                    showToast('Diario generato!', 'success');
+            if (data.should_end && data.journal_entry) {
+                showToast('Diario generato!', 'success');
 
-                    // Update streak
-                    if (data.streak) {
-                        elements.streakNumber.textContent = data.streak;
-                    }
+                if (data.streak) elements.streakNumber.textContent = data.streak;
 
-                    // Show journal entry in a modal or editor
-                    setTimeout(() => {
-                        closeChatMode();
-                        elements.journalEditor.value = data.journal_entry;
-                        updateWordCount();
-                    }, 2000);
-                }
+                // **Appendiamo al diario esistente**
+                elements.journalEditor.value += '\n' + data.journal_entry;
+                updateWordCount();
+
+                setTimeout(() => {
+                    closeChatMode();
+                }, 2000);
             }
         }
     } catch (error) {
+        removeTypingIndicator();
         console.error('Error sending message:', error);
         showToast('Errore invio messaggio', 'error');
     } finally {
@@ -286,6 +264,24 @@ async function sendChatMessage() {
         elements.chatSendBtn.disabled = false;
         elements.chatInput.focus();
     }
+}
+
+function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'typing-indicator';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    `;
+    elements.chatMessages.appendChild(typingDiv);
+    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+}
+
+function removeTypingIndicator() {
+    const typingDiv = document.getElementById('typingIndicator');
+    if (typingDiv) typingDiv.remove();
 }
 
 // ===== WELLNESS MODE =====
@@ -296,18 +292,13 @@ elements.closeWellness.addEventListener('click', closeWellnessMode);
 async function openWellnessMode() {
     elements.wellnessModal.classList.add('active');
     showOverlay();
-
-    // Show loading
     elements.wellnessLoading.style.display = 'block';
     elements.wellnessContent.style.display = 'none';
 
     try {
         const response = await fetch('/api/wellness/suggestions');
         const data = await response.json();
-
-        if (data.success) {
-            displayWellnessSuggestions(data);
-        }
+        if (data.success) displayWellnessSuggestions(data);
     } catch (error) {
         console.error('Error fetching wellness suggestions:', error);
         showToast('Errore caricamento suggerimenti', 'error');
@@ -315,27 +306,21 @@ async function openWellnessMode() {
 }
 
 function displayWellnessSuggestions(data) {
-    // Hide loading, show content
     elements.wellnessLoading.style.display = 'none';
     elements.wellnessContent.style.display = 'block';
 
-    // Display summary
     elements.wellnessSummary.innerHTML = `<p>${data.summary}</p>`;
-
-    // Display suggestions (senza icone)
     elements.wellnessSuggestions.innerHTML = '';
 
     data.suggestions.forEach(suggestion => {
         const card = document.createElement('div');
         card.className = 'wellness-card';
-
         card.innerHTML = `
             <div class="card-content">
                 <h3>${suggestion.title}</h3>
                 <p>${suggestion.description}</p>
             </div>
         `;
-
         elements.wellnessSuggestions.appendChild(card);
     });
 }
@@ -359,27 +344,17 @@ function closeMenu() {
     hideOverlay();
 }
 
-// Menu item actions
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         const action = item.dataset.action;
-
         closeMenu();
 
-        switch(action) {
-            case 'calendar':
-                showCalendar();
-                break;
-            case 'stats':
-                showStats();
-                break;
-            case 'entries':
-                showEntries();
-                break;
-            case 'settings':
-                showToast('Impostazioni in arrivo!', 'success');
-                break;
+        switch (action) {
+            case 'calendar': showCalendar(); break;
+            case 'stats': showStats(); break;
+            case 'entries': showEntries(); break;
+            case 'settings': showToast('Impostazioni in arrivo!', 'success'); break;
         }
     });
 });
@@ -393,10 +368,7 @@ async function showEntries() {
     try {
         const response = await fetch('/api/entries/recent?days=30');
         const data = await response.json();
-
-        if (data.success) {
-            displayEntries(data.entries);
-        }
+        if (data.success) displayEntries(data.entries);
     } catch (error) {
         console.error('Error fetching entries:', error);
         showToast('Errore caricamento log', 'error');
@@ -408,19 +380,22 @@ function displayEntries(entries) {
     entriesList.innerHTML = '';
 
     if (entries.length === 0) {
-        entriesList.innerHTML = '<p>Nessun log trovato. Inizia a scrivere!</p>';
+        entriesList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <div class="empty-text">Non hai ancora scritto nulla. <br>Inizia oggi il tuo diario!</div>
+            </div>
+        `;
         return;
     }
 
     entries.forEach(entry => {
         const entryDiv = document.createElement('div');
         entryDiv.className = 'entry-item';
-
         entryDiv.innerHTML = `
             <div class="entry-date">📅 ${entry.date}</div>
             <div class="entry-text">${entry.entry}</div>
         `;
-
         entriesList.appendChild(entryDiv);
     });
 }
@@ -433,30 +408,20 @@ elements.closeEntries.addEventListener('click', () => {
 // ===== STATS =====
 
 async function showStats() {
-    // Redirect to dedicated stats page
     window.location.href = '/stats';
 }
 
 // ===== CALENDAR =====
 
 async function showCalendar() {
-    // TODO: Implement calendar modal
     showToast('Calendario completo in arrivo!', 'success');
-
-    // For now, calendar is shown in side menu
 }
 
-// Load mini calendar
 async function loadMiniCalendar() {
     try {
         const response = await fetch('/api/calendar');
         const data = await response.json();
-
-        if (data.success) {
-            // Simple implementation - just show completed days
-            // Full calendar implementation would be more complex
-            console.log('Calendar data:', data);
-        }
+        if (data.success) console.log('Calendar data:', data);
     } catch (error) {
         console.error('Error loading calendar:', error);
     }
@@ -480,5 +445,4 @@ function init() {
     loadMiniCalendar();
 }
 
-// Run on page load
 document.addEventListener('DOMContentLoaded', init);

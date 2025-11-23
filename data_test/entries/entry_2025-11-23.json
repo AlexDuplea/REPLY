@@ -1,0 +1,15 @@
+{
+  "date": "2025-11-23",
+  "timestamp": "2025-11-23T23:23:25.064614",
+  "entry": "[Errore nella generazione del log: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.]",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 0,
+      "happiness": 0,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 0
+    }
+  }
+}

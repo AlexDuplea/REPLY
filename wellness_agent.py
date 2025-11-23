@@ -3,7 +3,7 @@ Wellness Agent - Agente AI per suggerimenti personalizzati sul benessere mentale
 Analizza i log dell'utente e fornisce consigli basati sui pattern rilevati
 """
 
-from openai import OpenAI
+import google.generativeai as genai
 from typing import List, Dict, Optional
 import config
 from storage import Storage
@@ -13,10 +13,14 @@ class WellnessAgent:
     
     def __init__(self):
         """Inizializza l'agente wellness"""
-        if not config.OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY non trovata!")
+        if not config.GEMINI_API_KEY:
+            raise ValueError("GEMINI_API_KEY non trovata!")
         
-        self.client = OpenAI(api_key=config.OPENAI_API_KEY)
+        genai.configure(api_key=config.GEMINI_API_KEY)
+        self.model = genai.GenerativeModel(
+            model_name=config.MODEL_NAME,
+            generation_config=config.GENERATION_CONFIG
+        )
         self.storage = Storage()
     
     def get_personalized_suggestions(self, num_days: int = 7) -> Dict:
@@ -66,7 +70,7 @@ class WellnessAgent:
         return "\n".join(context_parts)
     
     def _generate_ai_suggestions(self, context: str) -> Dict:
-        """Chiama OpenAI per generare suggerimenti personalizzati"""
+        """Chiama Gemini per generare suggerimenti personalizzati"""
         
         system_prompt = """Sei un wellness coach esperto e empatico. 
         
@@ -103,17 +107,18 @@ Basandoti SOLO su questi diari, genera suggerimenti personalizzati.
 IMPORTANTE: Rispondi SOLO con un oggetto JSON valido, senza altro testo."""
 
         try:
-            response = self.client.chat.completions.create(
-                model=config.MODEL_NAME,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                max_tokens=800,
-                temperature=0.7
+            # Crea modello con system instruction
+            model = genai.GenerativeModel(
+                model_name=config.MODEL_NAME,
+                generation_config={
+                    "temperature": 0.7,
+                    "max_output_tokens": 800,
+                },
+                system_instruction=system_prompt
             )
-
-            response_text = response.choices[0].message.content.strip()
+            
+            response = model.generate_content(user_prompt)
+            response_text = response.text.strip()
 
             # Rimuovi markdown se presente
             response_text = response_text.replace("```json", "").replace("```", "").strip()

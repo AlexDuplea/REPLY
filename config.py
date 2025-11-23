@@ -9,10 +9,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # API Configuration
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MODEL_NAME = "gpt-4o-mini"  # Più economico, ottimo per conversazioni
-MAX_TOKENS = 500
-TEMPERATURE = 0.7  # Bilanciamento creatività/coerenza
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+MODEL_NAME = "models/gemini-2.0-flash"  # Fast and efficient model (updated from deprecated 1.5-flash)
+GENERATION_CONFIG = {
+    "temperature": 0.7,  # Bilanciamento creatività/coerenza
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_output_tokens": 500,
+}
 
 # Paths
 DATA_DIR = "data_test"

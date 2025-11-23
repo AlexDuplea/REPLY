@@ -13,18 +13,18 @@
     --accent-blue: #7A9AAD;
     --shadow: rgba(62, 50, 38, 0.08);
     --shadow-strong: rgba(62, 50, 38, 0.15);
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    
+
     /* Typography */
     --font-serif: 'Crimson Text', 'Georgia', serif;
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -60,7 +60,9 @@ body {
     z-index: 100;
 }
 
-.header-left, .header-center, .header-right {
+.header-left,
+.header-center,
+.header-right {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -131,8 +133,15 @@ button {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 .streak-number {
@@ -156,6 +165,29 @@ button {
     padding: var(--spacing-xl) var(--spacing-lg);
     min-height: calc(100vh - 80px);
     position: relative;
+    transition: margin-right var(--transition-normal);
+}
+
+/* Desktop: Sidebar always visible */
+@media (min-width: 1025px) {
+    .side-menu {
+        right: 0;
+        box-shadow: none;
+        border-left: 1px solid var(--paper-dark);
+    }
+
+    .main-content {
+        margin-right: 400px;
+        /* Width of side menu */
+    }
+
+    .menu-btn {
+        display: none;
+    }
+
+    .close-menu {
+        display: none;
+    }
 }
 
 /* ===== EDITOR MODE ===== */
@@ -167,18 +199,23 @@ button {
     border: 1px solid var(--paper-dark);
     animation: fadeIn var(--transition-slow);
     background-image:
-        repeating-linear-gradient(
-            90deg,
+        repeating-linear-gradient(90deg,
             transparent,
             transparent 2px,
             rgba(62, 50, 38, 0.02) 2px,
-            rgba(62, 50, 38, 0.02) 4px
-        );
+            rgba(62, 50, 38, 0.02) 4px);
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .date-badge {
@@ -264,8 +301,15 @@ button {
 }
 
 @keyframes slideInFromRight {
-    from { opacity: 0; transform: translateX(50px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .chat-header {
@@ -309,8 +353,15 @@ button {
 }
 
 @keyframes messageSlideIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .chat-message.user {
@@ -353,6 +404,50 @@ button {
 
 .chat-message.user .message-icon {
     background: var(--accent-warm);
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--paper-dark);
+    border-radius: 12px;
+    border-bottom-left-radius: 4px;
+    width: fit-content;
+    margin-left: 44px;
+    /* Align with bubble */
+    margin-bottom: var(--spacing-sm);
+    animation: messageSlideIn var(--transition-normal);
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--ink-light);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
 }
 
 .chat-input-container {
@@ -612,7 +707,9 @@ button {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .wellness-summary {
@@ -694,6 +791,29 @@ button {
     font-weight: 600;
     font-size: 1.2rem;
     color: var(--ink-dark);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--ink-medium);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    opacity: 0.5;
+    margin-bottom: var(--spacing-sm);
+}
+
+.empty-text {
+    font-size: 1.1rem;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 /* ===== OVERLAY ===== */

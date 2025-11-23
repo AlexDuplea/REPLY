@@ -57,6 +57,7 @@
             </div>
 
             <!-- Sentiment Charts -->
+            {% if stats.total_entries > 0 %}
             <div class="charts-section">
                 <h2 class="section-title">📈 Andamento Emotivo</h2>
                 
@@ -88,6 +89,15 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="empty-state" style="margin-top: var(--spacing-xl);">
+                <div class="empty-icon">📊</div>
+                <div class="empty-text">
+                    Non ci sono ancora abbastanza dati per le statistiche.<br>
+                    Scrivi qualche pagina di diario per vedere i tuoi grafici!
+                </div>
+            </div>
+            {% endif %}
 
             <!-- Milestones -->
             {% if milestones %}

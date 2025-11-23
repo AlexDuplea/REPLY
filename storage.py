@@ -81,6 +81,10 @@ class Storage:
             return result
 
         else:
+            # Gestisci caso in cui last_entry è un datetime completo invece di solo data
+            if len(last_entry) > 10:
+                last_entry = last_entry[:10]
+            
             # Calcola differenza giorni
             last_date = date.fromisoformat(last_entry)
             today_date = date.today()

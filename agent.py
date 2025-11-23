@@ -1,9 +1,9 @@
 """
 Agente AI per Mental Wellness Journal
-Gestisce le conversazioni con l'utente usando OpenAI API
+Gestisce le conversazioni con l'utente usando Google Gemini API
 """
 
-from openai import OpenAI
+import google.generativeai as genai
 from typing import List, Dict, Optional
 import config
 from datetime import date
@@ -13,13 +13,18 @@ class MentalWellnessAgent:
     """Agente AI conversazionale per il diario del benessere mentale"""
 
     def __init__(self):
-        """Inizializza l'agente con API OpenAI"""
-        if not config.OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY non trovata! Controlla il file .env")
+        """Inizializza l'agente con API Gemini"""
+        if not config.GEMINI_API_KEY:
+            raise ValueError("GEMINI_API_KEY non trovata! Controlla il file .env")
 
-        self.client = OpenAI(api_key=config.OPENAI_API_KEY)
+        genai.configure(api_key=config.GEMINI_API_KEY)
+        self.model = genai.GenerativeModel(
+            model_name=config.MODEL_NAME,
+            generation_config=config.GENERATION_CONFIG
+        )
         self.conversation_history: List[Dict] = []
         self.session_started = False
+        self.chat_session = None
 
     def start_session(self, user_name: Optional[str] = None,
                       context: Optional[str] = None) -> str:
@@ -47,6 +52,9 @@ class MentalWellnessAgent:
             "role": "system",
             "content": system_prompt
         })
+
+        # Inizia chat session con Gemini
+        self.chat_session = self.model.start_chat(history=[])
 
         # Genera messaggio di apertura
         greeting = self._generate_greeting(user_name)
@@ -121,16 +129,32 @@ class MentalWellnessAgent:
                 "content": summary_prompt
             })
 
-        # Chiama OpenAI API
+        # Chiama Gemini API
         try:
-            response = self.client.chat.completions.create(
-                model=config.MODEL_NAME,
-                messages=self.conversation_history,
-                max_tokens=config.MAX_TOKENS,
-                temperature=config.TEMPERATURE
+            # Prepara il contesto per Gemini includendo il system prompt
+            system_instruction = self.conversation_history[0]["content"]
+            
+            # Crea un nuovo modello con system instruction
+            model_with_system = genai.GenerativeModel(
+                model_name=config.MODEL_NAME,
+                generation_config=config.GENERATION_CONFIG,
+                system_instruction=system_instruction
             )
-
-            assistant_message = response.choices[0].message.content
+            
+            # Prepara la history per Gemini (escludi system message)
+            gemini_history = []
+            for msg in self.conversation_history[1:-1]:  # Escludi system e ultimo messaggio utente
+                if msg["role"] == "user":
+                    gemini_history.append({"role": "user", "parts": [msg["content"]]})
+                elif msg["role"] == "assistant":
+                    gemini_history.append({"role": "model", "parts": [msg["content"]]})
+            
+            # Avvia chat con history
+            chat = model_with_system.start_chat(history=gemini_history)
+            
+            # Invia messaggio
+            response = chat.send_message(user_message if not should_end else summary_prompt)
+            assistant_message = response.text
 
             # Aggiungi risposta alla history
             self.conversation_history.append({
@@ -235,22 +259,23 @@ Esempio per conversazione BREVE (2-3 messaggi):
 Ora genera il log basandoti SOLO su ciò che l'utente ha effettivamente scritto:
 """
 
-        # Crea una nuova conversazione solo per questo task
-        messages = [
-            {"role": "system", "content": "Sei un assistente che trascrive fedelmente ciò che l'utente ha detto, senza aggiungere nulla. Sii MOLTO conciso e letterale."},
-            {"role": "user",
-             "content": f"Ecco la conversazione:\n\n{self._format_conversation_for_summary()}\n\n{prompt}"}
-        ]
-
         try:
-            response = self.client.chat.completions.create(
-                model=config.MODEL_NAME,
-                messages=messages,
-                max_tokens=max_tokens,
-                temperature=0.3  # Ridotta per essere più fedele
+            # Crea modello con system instruction specifica
+            model = genai.GenerativeModel(
+                model_name=config.MODEL_NAME,
+                generation_config={
+                    "temperature": 0.3,  # Ridotta per essere più fedele
+                    "max_output_tokens": max_tokens,
+                },
+                system_instruction="Sei un assistente che trascrive fedelmente ciò che l'utente ha detto, senza aggiungere nulla. Sii MOLTO conciso e letterale."
             )
-
-            return response.choices[0].message.content.strip()
+            
+            # Prepara il contesto della conversazione
+            conversation_text = self._format_conversation_for_summary()
+            full_prompt = f"Ecco la conversazione:\n\n{conversation_text}\n\n{prompt}"
+            
+            response = model.generate_content(full_prompt)
+            return response.text.strip()
 
         except Exception as e:
             return f"[Errore nella generazione del log: {str(e)}]"
