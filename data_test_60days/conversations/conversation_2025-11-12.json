@@ -1,0 +1,39 @@
+{
+  "date": "2025-11-12",
+  "timestamp": "2025-11-12T19:03:00",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! Bentornato! Come è andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Non benissimo, mi sento molto stressato."
+    },
+    {
+      "role": "assistant",
+      "content": "Mi dispiace sentirlo. Cosa ti sta preoccupando?"
+    },
+    {
+      "role": "user",
+      "content": "Ho troppi esami e poco tempo. Non so come farò."
+    },
+    {
+      "role": "assistant",
+      "content": "Capisco che possa essere opprimente. Hai provato a fare una lista delle priorità?"
+    },
+    {
+      "role": "user",
+      "content": "Sì, ma anche così mi sembra troppo. Mi sento sopraffatto."
+    },
+    {
+      "role": "assistant",
+      "content": "È normale sentirsi così in periodi intensi. Ricorda di prenderti anche delle pause. Hai dormito abbastanza?"
+    },
+    {
+      "role": "user",
+      "content": "Non molto, vado a letto tardi per studiare."
+    }
+  ],
+  "sessions": 1
+}

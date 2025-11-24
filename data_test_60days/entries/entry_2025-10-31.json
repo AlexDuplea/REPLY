@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-31",
+  "timestamp": "2025-10-31T19:50:00",
+  "entry": "Giornata standard. Ho seguito le lezioni online, fatto un po' di esercizio fisico a casa e preparato la cena. Tutto nella norma.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 2,
+      "happiness": 5,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 2
+    },
+    "message_count": 5
+  }
+}

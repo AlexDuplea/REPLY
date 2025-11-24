@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-22",
+  "timestamp": "2025-10-22T21:11:00",
+  "entry": "Oggi niente di particolare. Ho studiato per l'esame di algoritmi, fatto alcune commissioni e cucinato. Una giornata tranquilla senza alti e bassi.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 2,
+      "happiness": 3,
+      "sadness": 0,
+      "anger": 1,
+      "fatigue": 3
+    },
+    "message_count": 6
+  }
+}

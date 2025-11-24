@@ -19,7 +19,7 @@ GENERATION_CONFIG = {
 }
 
 # Paths
-DATA_DIR = "data_test"
+DATA_DIR = "data"
 CONVERSATIONS_DIR = os.path.join(DATA_DIR, "conversations")
 ENTRIES_DIR = os.path.join(DATA_DIR, "entries")
 USER_PROFILE_PATH = os.path.join(DATA_DIR, "user_profile.json")

@@ -53,19 +53,19 @@ def reset_all_data():
     """Reset completo di tutti i dati (con backup)"""
     print("\n⚠️  RESET COMPLETO DEI DATI")
 
-    if os.path.exists('data'):
+    if os.path.exists('Tools/data'):
         # Crea backup
         backup_name = f"data_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         print(f"\n📦 Creazione backup in: {backup_name}")
 
         try:
-            shutil.copytree('data', backup_name)
+            shutil.copytree('Tools/data', backup_name)
             print(f"   ✅ Backup creato")
         except Exception as e:
             print(f"   ⚠️  Errore backup: {e}")
 
         # Elimina data
-        shutil.rmtree('data')
+        shutil.rmtree('Tools/data')
         print("   ✅ Vecchi dati rimossi")
 
     # Ricrea tutto
@@ -79,7 +79,7 @@ def fix_corrupted_profile():
     """Fix solo del profilo corrotto"""
     print("\n🔧 Fix profilo corrotto...")
 
-    profile_path = 'data/user_profile.json'
+    profile_path = 'Tools/data/user_profile.json'
 
     # Prova a leggere il profilo esistente
     existing_data = {}

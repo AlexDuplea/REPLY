@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-19",
+  "timestamp": "2025-10-19T19:24:00",
+  "entry": "Oggi è Sunday 19 October. Weekend rilassante e rigenerante. Ho dormito bene, letto un libro interessante e guardato una serie che mi piaceva. A volte fare 'niente' è esattamente quello di cui ho bisogno.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 2,
+      "happiness": 5,
+      "sadness": 0,
+      "anger": 1,
+      "fatigue": 1
+    },
+    "message_count": 5
+  }
+}

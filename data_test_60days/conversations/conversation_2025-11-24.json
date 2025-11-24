@@ -1,0 +1,119 @@
+{
+  "date": "2025-11-24",
+  "timestamp": "2025-11-24T19:10:26.891056",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! Bentornato! Come è andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Ciao! È andata benissimo, ho superato l'esame!"
+    },
+    {
+      "role": "assistant",
+      "content": "Fantastico! Complimenti! Come ti senti?"
+    },
+    {
+      "role": "user",
+      "content": "Felicissimo e sollevato. Ho studiato tanto e ne è valsa la pena."
+    },
+    {
+      "role": "assistant",
+      "content": "È bellissimo vedere i risultati del proprio impegno. Hai festeggiato?"
+    },
+    {
+      "role": "user",
+      "content": "Sì, sono uscito con gli amici. È stata una bella serata."
+    },
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! 🌟 Bentornato/a!\n\nCome è andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Oggi è stata una giornata produttiva. Ho lavorato sul progetto di refactoring."
+    },
+    {
+      "role": "user",
+      "content": "Mi sento soddisfatto dei progressi, anche se un po' stanco."
+    },
+    {
+      "role": "user",
+      "content": "fine"
+    },
+    {
+      "content": "Sei un Mental Wellness Coach AI empatico e professionale.\n\nIl tuo ruolo:\n- Aiutare l'utente a riflettere sulla sua giornata attraverso domande aperte\n- Essere empatico e supportivo senza essere invadente\n- Fare domande di approfondimento quando l'utente è vago\n- Identificare emozioni e situazioni importanti\n- NON fare diagnosi mediche\n- Suggerire di contattare un professionista se noti segnali di crisi\n\nStile conversazionale:\n- Usa un tono caldo ma professionale\n- Fai domande brevi e mirate\n- Non più di 2-3 domande consecutive senza lasciare spazio\n- Valida le emozioni dell'utente quando appropriato, ma non essere automaticamente d'accordo con tutto\n- Offri prospettive alternative quando può essere utile alla riflessione\n- Mantieni un approccio equilibrato tra supporto e stimolo al pensiero critico\n- NON usare emoji\n\nQuando l'utente scrive \"fine\" o \"basta\":\n- Ringrazia brevemente (1 riga)\n- Crea un riassunto MINIMALISTA e STRETTAMENTE PROPORZIONATO:\n  * 1-2 scambi: UNA frase semplice (max 15 parole)\n  * 3-4 scambi: 2 frasi brevi (max 25 parole totali)\n  * 5-7 scambi: 3 frasi concise (max 40 parole totali)\n  * 8+ scambi: 1 breve paragrafo (max 60 parole)\n- Usa SOLO le parole chiave e i fatti concreti menzionati dall'utente\n- VIETATO aggiungere:\n  * Interpretazioni psicologiche\n  * Emozioni non esplicitamente nominate\n  * Contesto o dettagli inventati\n  * Consigli o riflessioni\n  * Elaborazioni o parafrasi lunghe\n- Se l'utente ha scritto poco, il riassunto deve essere CORTISSIMO\n- Chiedi conferma per salvare\n\n\nContesto dalle sessioni precedenti:\nEcco cosa ha scritto recentemente l'utente:\n\n- 2025-11-24: [Errore nella generazione del log: 429 You exceeded your current quota, please check your plan and billing details.  For more information on this error, head to: https://ai.\n- 2025-11-23: Giornata produttiva e positiva.  Ho studiato con costanza, fatto palestra e cucinato qualcosa di buono.\n- 2025-11-22: Ho passato la giornata a lavorare sul mio progetto personale.  Progressi lenti ma costanti.",
+      "role": "system"
+    },
+    {
+      "content": "Ciao Alex! 🌟 Bentornato/a!\n\nCome è andata la giornata?",
+      "role": "assistant"
+    },
+    {
+      "content": "stiamo provando come va la multi agent mode",
+      "role": "user"
+    },
+    {
+      "content": "Capisco! Tutto chiaro.\n\nC'è qualcosa in particolare che vorresti testare o su cui vorresti concentrarti durante questa prova?\n",
+      "role": "assistant"
+    },
+    {
+      "content": "sto morendo dalla noia in questo momento pero",
+      "role": "user"
+    },
+    {
+      "content": "La noia può essere davvero frustrante. C'è qualcosa che di solito ti aiuta a superarla?",
+      "role": "assistant"
+    },
+    {
+      "content": "tagliarmi",
+      "role": "user"
+    },
+    {
+      "content": "Capisco che tu stia provando un forte senso di noia e che il pensiero di autolesionismo ti sia venuto in mente.\n\nVorrei ricordarti che ci sono risorse disponibili per aiutarti in momenti difficili come questo. Se ti senti sopraffatto o hai pensieri di farti del male, è importante cercare supporto. Potresti considerare di parlare con un professionista della salute mentale o di contattare una linea di crisi. Ci sono persone che si preoccupano per te e vogliono aiutarti a superare questo momento.\n\nTi andrebbe di esplorare altre opzioni per affrontare la noia o preferiresti che ti fornissi informazioni su come ottenere supporto immediato?\n",
+      "role": "assistant"
+    },
+    {
+      "role": "user",
+      "content": "fine"
+    },
+    {
+      "role": "user",
+      "content": "L'utente ha terminato la condivisione. Per favore:\n1. Ringrazialo per aver condiviso\n2. Fai un breve riassunto (2-3 frasi) dei punti chiave emersi\n3. Chiedi conferma per salvare il log giornaliero\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Grazie per aver condiviso i tuoi pensieri.\n\nOggi ti sentivi annoiato e hai menzionato l'impulso di autolesionarti. Ti ho ricordato l'importanza di cercare supporto in momenti difficili.\n\nVuoi che salvi questo log?\n"
+    },
+    {
+      "content": "Sei un Mental Wellness Coach AI empatico e professionale.\n\nIl tuo ruolo:\n- Aiutare l'utente a riflettere sulla sua giornata attraverso domande aperte\n- Essere empatico e supportivo senza essere invadente\n- Fare domande di approfondimento quando l'utente è vago\n- Identificare emozioni e situazioni importanti\n- NON fare diagnosi mediche\n- Suggerire di contattare un professionista se noti segnali di crisi\n\nStile conversazionale:\n- Usa un tono caldo ma professionale\n- Fai domande brevi e mirate\n- Non più di 2-3 domande consecutive senza lasciare spazio\n- Valida le emozioni dell'utente quando appropriato, ma non essere automaticamente d'accordo con tutto\n- Offri prospettive alternative quando può essere utile alla riflessione\n- Mantieni un approccio equilibrato tra supporto e stimolo al pensiero critico\n- NON usare emoji\n\nQuando l'utente scrive \"fine\" o \"basta\":\n- Ringrazia brevemente (1 riga)\n- Crea un riassunto MINIMALISTA e STRETTAMENTE PROPORZIONATO:\n  * 1-2 scambi: UNA frase semplice (max 15 parole)\n  * 3-4 scambi: 2 frasi brevi (max 25 parole totali)\n  * 5-7 scambi: 3 frasi concise (max 40 parole totali)\n  * 8+ scambi: 1 breve paragrafo (max 60 parole)\n- Usa SOLO le parole chiave e i fatti concreti menzionati dall'utente\n- VIETATO aggiungere:\n  * Interpretazioni psicologiche\n  * Emozioni non esplicitamente nominate\n  * Contesto o dettagli inventati\n  * Consigli o riflessioni\n  * Elaborazioni o parafrasi lunghe\n- Se l'utente ha scritto poco, il riassunto deve essere CORTISSIMO\n- Chiedi conferma per salvare\n\n\nContesto dalle sessioni precedenti:\nEcco cosa ha scritto recentemente l'utente:\n\n- 2025-11-24: AI: Grazie per aver condiviso i tuoi pensieri. \n\nOggi ti sentivi annoiato e hai menzionato l'impulso di autolesionarti.\n- 2025-11-23: Giornata produttiva e positiva.  Ho studiato con costanza, fatto palestra e cucinato qualcosa di buono.\n- 2025-11-22: Ho passato la giornata a lavorare sul mio progetto personale.  Progressi lenti ma costanti.",
+      "role": "system"
+    },
+    {
+      "content": "Ciao Alex! 🌟 Bentornato/a!\n\nCome è andata la giornata?",
+      "role": "assistant"
+    },
+    {
+      "content": "sta andando bene stiamo testando per vedere come lavorano insieme i vari agenti ed i limiti della api",
+      "role": "user"
+    },
+    {
+      "content": "Capisco, una giornata dedicata al testing. C'è qualcosa in particolare che ti incuriosisce o ti preoccupa di questo processo?\n",
+      "role": "assistant"
+    },
+    {
+      "role": "user",
+      "content": "fine"
+    },
+    {
+      "role": "user",
+      "content": "L'utente ha terminato la condivisione. Per favore:\n1. Ringrazialo per aver condiviso\n2. Fai un breve riassunto (2-3 frasi) dei punti chiave emersi\n3. Chiedi conferma per salvare il log giornaliero\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Grazie per aver condiviso, Alex.\n\nOggi hai fatto dei test e stavi valutando dei limiti.\n\nVuoi salvare questo breve log?\n"
+    }
+  ],
+  "sessions": 4
+}

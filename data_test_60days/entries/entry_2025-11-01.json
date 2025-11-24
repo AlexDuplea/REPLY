@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-01",
+  "timestamp": "2025-11-01T18:59:00",
+  "entry": "Oggi ho superato l'esame difficile che mi preoccupava tanto! Ho preso anche un bel voto. Sono felicissimo e orgoglioso di me stesso. Tutto lo studio è servito. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 0,
+      "happiness": 8,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 0
+    },
+    "message_count": 6
+  }
+}

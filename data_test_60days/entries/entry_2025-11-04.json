@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-04",
+  "timestamp": "2025-11-04T18:29:00",
+  "entry": "Oggi alti e bassi. La mattina produttiva, il pomeriggio un po' giù. Sera tranquilla con Netflix. Nel complesso una giornata ok. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 3,
+      "happiness": 5,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 1
+    },
+    "message_count": 12
+  }
+}

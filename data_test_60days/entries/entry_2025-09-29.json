@@ -1,0 +1,16 @@
+{
+  "date": "2025-09-29",
+  "timestamp": "2025-09-29T21:52:00",
+  "entry": "Oggi è Monday 29 September. Stamattina ero molto ansioso per l'esame. Alla fine è andato meglio di quanto pensassi! Devo imparare a fidarmi di più della mia preparazione.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 2,
+      "happiness": 3,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 3
+    },
+    "message_count": 6
+  }
+}

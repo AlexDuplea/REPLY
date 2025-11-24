@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-12",
+  "timestamp": "2025-11-12T22:58:00",
+  "entry": "Ottima giornata di studio! Sono entrato nel flow e non ho sentito passare il tempo. Adoro quando succede, mi fa sentire veramente appassionato di quello che faccio. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 1,
+      "happiness": 5,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 2
+    },
+    "message_count": 8
+  }
+}

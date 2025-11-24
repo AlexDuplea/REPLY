@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-04",
+  "timestamp": "2025-10-04T20:53:00",
+  "entry": "Ho iniziato la giornata stressato ma poi ho parlato con un amico e mi sono sfogato. Mi ha fatto bene condividere le mie preoccupazioni invece di tenerle dentro. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 4,
+      "happiness": 4,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 1
+    },
+    "message_count": 0
+  }
+}

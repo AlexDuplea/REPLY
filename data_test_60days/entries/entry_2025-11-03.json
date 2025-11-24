@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-03",
+  "timestamp": "2025-11-03T19:57:00",
+  "entry": "Mi sento molto stressato per la presentazione del progetto di domani. L'ansia è forte e non riesco a rilassarmi. Ho paura di non essere preparato abbastanza.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 5,
+      "happiness": 2,
+      "sadness": 5,
+      "anger": 1,
+      "fatigue": 2
+    },
+    "message_count": 0
+  }
+}

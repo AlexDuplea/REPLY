@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-05",
+  "timestamp": "2025-11-05T22:51:00",
+  "entry": "Oggi non è andata bene. Ho litigato con un amico per una stupidaggine e mi sento abbattuto. Ho provato a studiare ma non riuscivo a concentrarmi. Spero domani vada meglio. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 6,
+      "happiness": 1,
+      "sadness": 4,
+      "anger": 2,
+      "fatigue": 4
+    },
+    "message_count": 11
+  }
+}

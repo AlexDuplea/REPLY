@@ -369,15 +369,14 @@ def get_sentiment_data():
 
             emotions = entry.get('metadata', {}).get('emotions_detected', {})
 
-            # Calcola score da keyword count (semplificato)
-            stress = min(emotions.get('stress', 0) * 2, 10)
-            happiness = min(emotions.get('happiness', 0) * 2, 10)
-            # Energy calcolato inversamente da fatigue
-            energy = max(10 - emotions.get('fatigue', 0) * 2, 0)
+            # Usa direttamente i valori 0-10 dal SentimentAgent
+            stress = emotions.get('stress', 5)
+            happiness = emotions.get('happiness', 6)
+            energy = emotions.get('energy', 6)
 
-            stress_data.append(stress if stress > 0 else 5)  # Default medio
-            happiness_data.append(happiness if happiness > 0 else 6)
-            energy_data.append(energy if energy > 0 else 6)
+            stress_data.append(stress)
+            happiness_data.append(happiness)
+            energy_data.append(energy)
 
         # Calcola overall (media)
         overall = [

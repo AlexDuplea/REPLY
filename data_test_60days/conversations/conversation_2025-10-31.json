@@ -1,0 +1,39 @@
+{
+  "date": "2025-10-31",
+  "timestamp": "2025-10-31T19:47:00",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! Bentornato! Come è andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Male, sono molto ansioso."
+    },
+    {
+      "role": "assistant",
+      "content": "Mi dispiace. Vuoi parlarne? Cosa ti sta causando ansia?"
+    },
+    {
+      "role": "user",
+      "content": "La presentazione di domani. Ho paura di fare brutta figura."
+    },
+    {
+      "role": "assistant",
+      "content": "L'ansia da prestazione è comune. Ti sei preparato bene?"
+    },
+    {
+      "role": "user",
+      "content": "Sì, ma ho sempre paura che non basti."
+    },
+    {
+      "role": "assistant",
+      "content": "Capisco. A volte la nostra mente esagera i rischi. Hai provato tecniche di respirazione?"
+    },
+    {
+      "role": "user",
+      "content": "Un po', mi aiutano ma l'ansia rimane."
+    }
+  ],
+  "sessions": 1
+}

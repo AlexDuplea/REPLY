@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-26",
+  "timestamp": "2025-10-26T22:45:00",
+  "entry": "Oggi è Sunday 26 October. Bellissima giornata! Sono uscito con gli amici, abbiamo fatto una passeggiata al parco e poi pizza insieme. Mi sono sentito davvero rilassato e felice. A volte è importante staccare dallo studio.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 0,
+      "happiness": 9,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 0
+    },
+    "message_count": 0
+  }
+}

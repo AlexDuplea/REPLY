@@ -1146,3 +1146,348 @@ button:focus-visible {
         font-size: 1.2rem;
     }
 }
+
+
+
+/* ===== MODALS & OVERLAY STYLES (DA AGGIUNGERE A style.css) ===== */
+
+/* Overlay generale */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 150;
+    display: none;
+    transition: opacity var(--transition-normal);
+}
+
+.overlay.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Base Modal Styles */
+.wellness-modal,
+.entries-modal,
+.stats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+.wellness-modal.active,
+.entries-modal.active,
+.stats-modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Modal Content Container */
+.wellness-modal .modal-content,
+.entries-modal .modal-content,
+.stats-modal .modal-content {
+    background: var(--paper-light);
+    border-radius: 16px;
+    padding: var(--spacing-xl);
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px var(--shadow-strong);
+    border: 2px solid var(--paper-dark);
+    position: relative;
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.close-modal {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--paper-bg);
+    border: 1px solid var(--paper-dark);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink-medium);
+    transition: all var(--transition-fast);
+    font-size: 1.2rem;
+}
+
+.close-modal:hover {
+    background: var(--accent-red);
+    color: var(--paper-light);
+    transform: rotate(90deg);
+}
+
+/* Modal Header */
+.wellness-modal h2,
+.entries-modal h2,
+.stats-modal h2 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--ink-dark);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-right: 40px;
+    /* Space for close button */
+}
+
+/* ===== WELLNESS MODAL SPECIFIC ===== */
+
+.wellness-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    gap: var(--spacing-md);
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--paper-dark);
+    border-top-color: var(--accent-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.wellness-loading p {
+    color: var(--ink-medium);
+    font-size: 1rem;
+}
+
+.wellness-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.wellness-summary {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #7a8a74 100%);
+    color: var(--paper-light);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.wellness-summary p {
+    margin: 0;
+}
+
+.wellness-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.wellness-card {
+    background: var(--paper-bg);
+    border: 1px solid var(--paper-dark);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    transition: all var(--transition-fast);
+}
+
+.wellness-card:hover {
+    transform: translateX(4px);
+    border-color: var(--accent-green);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.wellness-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--ink-dark);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wellness-card p {
+    color: var(--ink-medium);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ===== ENTRIES MODAL SPECIFIC ===== */
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.entry-item {
+    background: var(--paper-bg);
+    border: 1px solid var(--paper-dark);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    transition: all var(--transition-fast);
+}
+
+.entry-item:hover {
+    border-color: var(--accent-warm);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.entry-date {
+    font-weight: 600;
+    color: var(--accent-warm);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.entry-text {
+    color: var(--ink-dark);
+    line-height: 1.6;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    gap: var(--spacing-md);
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: var(--ink-light);
+}
+
+.empty-text {
+    color: var(--ink-medium);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* ===== STATS MODAL SPECIFIC ===== */
+
+.stats-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.stats-content .stat-card {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink-dark);
+    color: var(--paper-light);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px var(--shadow-strong);
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 300;
+    opacity: 0;
+    transition: all var(--transition-normal);
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.toast.success {
+    background: var(--accent-green);
+}
+
+.toast.error {
+    background: var(--accent-red);
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+
+@media (max-width: 768px) {
+
+    .wellness-modal .modal-content,
+    .entries-modal .modal-content,
+    .stats-modal .modal-content {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        padding: var(--spacing-lg);
+    }
+
+    .wellness-modal h2,
+    .entries-modal h2,
+    .stats-modal h2 {
+        font-size: 1.5rem;
+    }
+
+    .wellness-card,
+    .entry-item {
+        padding: var(--spacing-sm);
+    }
+}

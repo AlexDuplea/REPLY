@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-17",
+  "timestamp": "2025-10-17T23:08:00",
+  "entry": "Stamattina ero molto ansioso per l'esame. Alla fine è andato meglio di quanto pensassi! Devo imparare a fidarmi di più della mia preparazione. È stato comunque un giorno importante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 2,
+      "happiness": 5,
+      "sadness": 1,
+      "anger": 1,
+      "fatigue": 1
+    },
+    "message_count": 7
+  }
+}

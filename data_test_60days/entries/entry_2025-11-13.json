@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-13",
+  "timestamp": "2025-11-13T20:51:00",
+  "entry": "Oggi è Thursday 13 November. Oggi non è andata bene. Ho litigato con un amico per una stupidaggine e mi sento abbattuto. Ho provato a studiare ma non riuscivo a concentrarmi. Spero domani vada meglio.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 6,
+      "happiness": 1,
+      "sadness": 4,
+      "anger": 2,
+      "fatigue": 3
+    },
+    "message_count": 6
+  }
+}

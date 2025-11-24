@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-01",
+  "timestamp": "2025-10-01T19:41:00",
+  "entry": "Oggi è Wednesday 01 October. Oggi niente di particolare. Ho studiato per l'esame di algoritmi, fatto alcune commissioni e cucinato. Una giornata tranquilla senza alti e bassi.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 3,
+      "happiness": 4,
+      "sadness": 1,
+      "anger": 0,
+      "fatigue": 1
+    },
+    "message_count": 10
+  }
+}

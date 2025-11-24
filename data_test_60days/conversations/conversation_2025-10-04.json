@@ -1,0 +1,31 @@
+{
+  "date": "2025-10-04",
+  "timestamp": "2025-10-04T19:59:00",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Ciao Alex! Bentornato! Come è andata la giornata?"
+    },
+    {
+      "role": "user",
+      "content": "Normale, ho studiato e fatto le solite cose."
+    },
+    {
+      "role": "assistant",
+      "content": "Una giornata tranquilla quindi. Come ti senti?"
+    },
+    {
+      "role": "user",
+      "content": "Bene, niente di particolare. Solo routine."
+    },
+    {
+      "role": "assistant",
+      "content": "Va bene anche avere giorni tranquilli. Hai fatto qualcosa di piacevole?"
+    },
+    {
+      "role": "user",
+      "content": "Ho guardato una serie la sera, mi sono rilassato."
+    }
+  ],
+  "sessions": 1
+}

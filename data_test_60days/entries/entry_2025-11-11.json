@@ -1,0 +1,16 @@
+{
+  "date": "2025-11-11",
+  "timestamp": "2025-11-11T21:13:00",
+  "entry": "Oggi è Tuesday 11 November. Oggi ho fatto le solite cose: università, biblioteca, casa. Mi sento ok, niente di speciale ma nemmeno male. Solo una giornata come tante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 1,
+      "happiness": 3,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 2
+    },
+    "message_count": 11
+  }
+}

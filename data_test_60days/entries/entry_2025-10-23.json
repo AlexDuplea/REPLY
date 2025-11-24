@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-23",
+  "timestamp": "2025-10-23T19:05:00",
+  "entry": "Oggi è stata una giornata fantastica! Ho completato il progetto di machine learning che mi stava dando problemi da settimane. Sono molto soddisfatto del risultato e il prof ha fatto i complimenti. Mi sento energico e motivato.",
+  "metadata": {
+    "source": "editor",
+    "emotions_detected": {
+      "stress": 0,
+      "happiness": 5,
+      "sadness": 0,
+      "anger": 0,
+      "fatigue": 1
+    },
+    "message_count": 0
+  }
+}

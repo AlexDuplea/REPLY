@@ -1,0 +1,16 @@
+{
+  "date": "2025-10-09",
+  "timestamp": "2025-10-09T22:51:00",
+  "entry": "Oggi è Thursday 09 October. Oggi ho fatto le solite cose: università, biblioteca, casa. Mi sento ok, niente di speciale ma nemmeno male. Solo una giornata come tante.",
+  "metadata": {
+    "source": "chat",
+    "emotions_detected": {
+      "stress": 1,
+      "happiness": 4,
+      "sadness": 0,
+      "anger": 1,
+      "fatigue": 1
+    },
+    "message_count": 8
+  }
+}
