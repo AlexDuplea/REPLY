@@ -1,17 +1,3 @@
-"""
-Mental Wellness Journal - Interfaccia Terminale
-Entry point principale dell'applicazione
-"""
-
-import sys
-from datetime import date
-from agent import MentalWellnessAgent
-from storage import Storage
-import config
-
-
-class TerminalInterface:
-    """Interfaccia da terminale per il diario"""
 
     def __init__(self):
         self.storage = Storage()

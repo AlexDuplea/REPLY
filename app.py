@@ -9,8 +9,8 @@ import secrets
 
 # Import moduli esistenti
 from storage import Storage
-from agent import MentalWellnessAgent
-from wellness_agent import WellnessAgent
+from Agents.agent import MentalWellnessAgent
+from Agents.wellness_agent import WellnessAgent
 import config
 
 app = Flask(__name__)

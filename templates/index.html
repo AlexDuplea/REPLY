@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeMind - Mental Wellness Journal</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
         <div class="header-left">
             <h1 class="logo">
-                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="WeMind" class="logo-img">
+                <i class="ph-fill ph-book-open-text" style="font-size: 32px; color: var(--ink-dark);"></i>
                 WeMind
             </h1>
         </div>
 
         <div class="header-center">
             <button class="wellness-btn" id="wellnessBtn">
-                <img src="{{ url_for('static', filename='images/wellness-icon.svg') }}" alt="Wellness" class="wellness-icon">
+                <i class="ph-fill ph-plant" style="font-size: 20px;"></i>
                 Wellness
             </button>
         </div>
 
         <div class="header-right">
             <div class="streak-badge">
-                🔥 <span class="streak-number" id="streakNumber">{{ streak }}</span>
+                <i class="ph-fill ph-fire" style="color: var(--paper-light);"></i>
+                <span class="streak-number" id="streakNumber">{{ streak }}</span>
             </div>
-            <button class="menu-btn" id="menuBtn">☰</button>
+            <button class="menu-btn" id="menuBtn">
+                <i class="ph-bold ph-list"></i>
+            </button>
         </div>
     </header>
 
@@ -36,17 +42,14 @@
         <!-- EDITOR MODE (default) -->
         <div class="editor-container" id="editorMode">
             <div class="date-badge">
-                <span class="date-icon">📅</span>
+                <i class="ph-bold ph-calendar-blank"></i>
                 <span class="date-text">{{ date }}</span>
             </div>
 
             <div class="editor-wrapper">
-                <textarea
-                    class="journal-editor"
-                    id="journalEditor"
+                <textarea class="journal-editor" id="journalEditor"
                     placeholder="Come è andata oggi? Scrivi liberamente i tuoi pensieri..."
-                    spellcheck="false"
-                ></textarea>
+                    spellcheck="false"></textarea>
             </div>
 
             <div class="editor-footer">
@@ -58,8 +61,8 @@
         <!-- CHAT MODE (hidden by default) -->
         <div class="chat-container" id="chatMode" style="display: none;">
             <div class="chat-header">
-                <h2>💬 Chat con AI</h2>
-                <button class="close-chat" id="closeChat">✕</button>
+                <h2><i class="ph-fill ph-chat-circle-text"></i> Chat con AI</h2>
+                <button class="close-chat" id="closeChat"><i class="ph-bold ph-x"></i></button>
             </div>
 
             <div class="chat-messages" id="chatMessages">
@@ -67,19 +70,14 @@
             </div>
 
             <div class="chat-input-container">
-                <input
-                    type="text"
-                    class="chat-input"
-                    id="chatInput"
-                    placeholder="Scrivi il tuo messaggio..."
-                />
+                <input type="text" class="chat-input" id="chatInput" placeholder="Scrivi il tuo messaggio..." />
                 <button class="chat-send-btn" id="chatSendBtn">Invia</button>
             </div>
         </div>
 
         <!-- Chat Toggle Button (floating) -->
         <button class="chat-toggle" id="chatToggle" title="Attiva Chat Mode">
-            💬
+            <i class="ph-fill ph-chat-circle-dots"></i>
         </button>
     </main>
 
@@ -87,24 +85,24 @@
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
             <h2>Menu</h2>
-            <button class="close-menu" id="closeMenu">✕</button>
+            <button class="close-menu" id="closeMenu"><i class="ph-bold ph-x"></i></button>
         </div>
 
         <nav class="menu-nav">
             <a href="#" class="menu-item" data-action="calendar">
-                <span class="menu-icon">📅</span>
+                <i class="ph-duotone ph-calendar menu-icon"></i>
                 <span class="menu-text">Calendario</span>
             </a>
             <a href="#" class="menu-item" data-action="stats">
-                <span class="menu-icon">📊</span>
+                <i class="ph-duotone ph-chart-bar menu-icon"></i>
                 <span class="menu-text">Statistiche</span>
             </a>
             <a href="#" class="menu-item" data-action="entries">
-                <span class="menu-icon">📖</span>
+                <i class="ph-duotone ph-notebook menu-icon"></i>
                 <span class="menu-text">Vecchi Log</span>
             </a>
             <a href="#" class="menu-item" data-action="settings">
-                <span class="menu-icon">⚙️</span>
+                <i class="ph-duotone ph-gear menu-icon"></i>
                 <span class="menu-text">Impostazioni</span>
             </a>
         </nav>
@@ -121,9 +119,9 @@
     <!-- Wellness Modal -->
     <div class="wellness-modal" id="wellnessModal">
         <div class="modal-content">
-            <button class="close-modal" id="closeWellness">✕</button>
+            <button class="close-modal" id="closeWellness"><i class="ph-bold ph-x"></i></button>
 
-            <h2>Suggerimenti per il Benessere</h2>
+            <h2><i class="ph-duotone ph-plant"></i> Suggerimenti per il Benessere</h2>
 
             <div class="wellness-loading" id="wellnessLoading">
                 <div class="loading-spinner"></div>
@@ -145,9 +143,9 @@
     <!-- Entries List Modal -->
     <div class="entries-modal" id="entriesModal">
         <div class="modal-content">
-            <button class="close-modal" id="closeEntries">✕</button>
+            <button class="close-modal" id="closeEntries"><i class="ph-bold ph-x"></i></button>
 
-            <h2>📖 I Tuoi Log</h2>
+            <h2><i class="ph-duotone ph-notebook"></i> I Tuoi Log</h2>
 
             <div class="entries-list" id="entriesList">
                 <!-- Will be populated by JS -->
@@ -158,9 +156,9 @@
     <!-- Stats Modal -->
     <div class="stats-modal" id="statsModal">
         <div class="modal-content">
-            <button class="close-modal" id="closeStats">✕</button>
+            <button class="close-modal" id="closeStats"><i class="ph-bold ph-x"></i></button>
 
-            <h2>📊 Le Tue Statistiche</h2>
+            <h2><i class="ph-duotone ph-chart-bar"></i> Le Tue Statistiche</h2>
 
             <div class="stats-content" id="statsContent">
                 <!-- Will be populated by JS -->
@@ -176,4 +174,5 @@
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
+
 </html>

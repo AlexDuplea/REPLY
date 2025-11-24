@@ -1,129 +1,200 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statistiche - WeMind</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-</head>
-<body class="stats-page">
-    <!-- Header -->
-    <header class="header">
+{% extends "base.html" %}
+
+{% block title %}Statistiche - WeMind{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="stats-container">
+    <!-- Header Sticky -->
+    <header class="stats-header">
         <div class="header-left">
-            <a href="/" class="back-btn">← Indietro</a>
-            <h1 class="logo">
-                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="WeMind" class="logo-img">
-                WeMind
-            </h1>
+            <a href="{{ url_for('index') }}" class="back-btn">
+                <i class="ph-bold ph-arrow-left"></i>
+                Back
+            </a>
         </div>
-        
+
+        <div class="header-center">
+            <h1 class="page-title">Il Tuo Percorso</h1>
+        </div>
+
         <div class="header-right">
-            <div class="streak-badge">
-                🔥 <span class="streak-number">{{ streak }}</span>
+            <div class="time-filters">
+                <button class="filter-btn active" data-period="7">7 Giorni</button>
+                <button class="filter-btn" data-period="30">30 Giorni</button>
+                <button class="filter-btn" data-period="90">3 Mesi</button>
+                <button class="filter-btn" data-period="365">Tutto</button>
+            </div>
+
+            <div class="export-controls">
+                <button id="export-pdf" class="icon-btn" title="Esporta PDF">
+                    <i class="ph ph-file-pdf"></i>
+                </button>
+                <button id="export-csv" class="icon-btn" title="Esporta CSV">
+                    <i class="ph ph-file-csv"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="stats-main">
-        <div class="stats-container">
-            <h1 class="page-title">📊 Le Tue Statistiche</h1>
-            
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">🔥</div>
-                    <div class="stat-value" id="currentStreak">{{ stats.current_streak }}</div>
-                    <div class="stat-label">Streak Corrente</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
-                    <div class="stat-value" id="longestStreak">{{ stats.longest_streak }}</div>
-                    <div class="stat-label">Streak Più Lungo</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">📝</div>
-                    <div class="stat-value" id="totalEntries">{{ stats.total_entries }}</div>
-                    <div class="stat-label">Totale Entries</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-value" id="avgPerWeek">-</div>
-                    <div class="stat-label">Media/Settimana</div>
-                </div>
-            </div>
-
-            <!-- Sentiment Charts -->
-            {% if stats.total_entries > 0 %}
-            <div class="charts-section">
-                <h2 class="section-title">📈 Andamento Emotivo</h2>
-                
-                <div class="charts-grid">
-                    <!-- Stress Chart -->
-                    <div class="chart-card">
-                        <h3>Livello Stress</h3>
-                        <canvas id="stressChart"></canvas>
-                    </div>
-                    
-                    <!-- Happiness Chart -->
-                    <div class="chart-card">
-                        <h3>Felicità</h3>
-                        <canvas id="happinessChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="charts-grid">
-                    <!-- Energy Chart -->
-                    <div class="chart-card">
-                        <h3>Energia</h3>
-                        <canvas id="energyChart"></canvas>
-                    </div>
-                    
-                    <!-- Overall Sentiment -->
-                    <div class="chart-card">
-                        <h3>Sentiment Generale</h3>
-                        <canvas id="sentimentChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="empty-state" style="margin-top: var(--spacing-xl);">
-                <div class="empty-icon">📊</div>
-                <div class="empty-text">
-                    Non ci sono ancora abbastanza dati per le statistiche.<br>
-                    Scrivi qualche pagina di diario per vedere i tuoi grafici!
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- Milestones -->
-            {% if milestones %}
-            <div class="milestones-section">
-                <h2 class="section-title">🏆 Milestone Raggiunte</h2>
-                <div class="milestones-grid">
-                    {% for milestone in milestones %}
-                    <div class="milestone-badge">
-                        <span class="milestone-icon">✓</span>
-                        <span class="milestone-name">{{ milestone }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- Activity Calendar -->
-            <div class="calendar-section">
-                <h2 class="section-title">📅 Calendario Attività</h2>
-                <div class="activity-calendar" id="activityCalendar">
-                    <!-- Will be populated by JS -->
-                </div>
+    <!-- Section 1: Overview Cards -->
+    <section class="stats-section overview-section">
+        <div class="stat-card" id="card-streak">
+            <div class="card-icon"><i class="ph ph-fire"></i></div>
+            <div class="card-data">
+                <span class="stat-value" id="streak-value">0</span>
+                <span class="stat-label">Streak Attuale</span>
             </div>
         </div>
-    </main>
 
-    <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
-</body>
-</html>
+        <div class="stat-card" id="card-longest">
+            <div class="card-icon"><i class="ph ph-trophy"></i></div>
+            <div class="card-data">
+                <span class="stat-value" id="longest-streak-value">0</span>
+                <span class="stat-label">Best Streak</span>
+            </div>
+        </div>
+
+        <div class="stat-card" id="card-entries">
+            <div class="card-icon"><i class="ph ph-book-bookmark"></i></div>
+            <div class="card-data">
+                <span class="stat-value" id="total-entries-value">0</span>
+                <span class="stat-label">Entries Totali</span>
+            </div>
+        </div>
+
+        <div class="stat-card" id="card-freq">
+            <div class="card-icon"><i class="ph ph-chart-bar"></i></div>
+            <div class="card-data">
+                <span class="stat-value" id="freq-value">0.0</span>
+                <span class="stat-sub">/settimana</span>
+                <span class="stat-label">Frequenza</span>
+            </div>
+        </div>
+
+        <div class="stat-card" id="card-words">
+            <div class="card-icon"><i class="ph ph-text-t"></i></div>
+            <div class="card-data">
+                <span class="stat-value" id="words-value">0</span>
+                <span class="stat-label">Parole Scritte</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Insights Box -->
+    <section class="stats-section insights-section">
+        <div class="insights-box">
+            <div class="insights-header">
+                <i class="ph ph-lightbulb"></i>
+                <h3>Insights Automatici</h3>
+            </div>
+            <div class="insights-grid" id="insights-container">
+                <!-- Populated by JS -->
+                <div class="insight-item skeleton"></div>
+                <div class="insight-item skeleton"></div>
+                <div class="insight-item skeleton"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Charts Grid -->
+    <section class="stats-section charts-grid">
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>Livello Stress</h3>
+                <div class="chart-legend">
+                    <span class="trend-indicator" id="stress-trend">--</span>
+                </div>
+            </div>
+            <div class="chart-canvas-container">
+                <canvas id="stressChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>Felicita</h3>
+                <div class="chart-legend">
+                    <span class="trend-indicator" id="happiness-trend">--</span>
+                </div>
+            </div>
+            <div class="chart-canvas-container">
+                <canvas id="happinessChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>Energia</h3>
+                <div class="chart-legend">
+                    <span class="trend-indicator" id="energy-trend">--</span>
+                </div>
+            </div>
+            <div class="chart-canvas-container">
+                <canvas id="energyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>Sentiment Generale</h3>
+            </div>
+            <div class="chart-canvas-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Writing Consistency -->
+    <section class="stats-section consistency-section">
+        <h3>Consistenza Scrittura</h3>
+        <div class="chart-card full-width">
+            <canvas id="consistencyChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Section 5: Activity Heatmap -->
+    <section class="stats-section heatmap-section">
+        <h3>Calendario Attivita</h3>
+        <div class="heatmap-container" id="heatmap-container">
+            <!-- Generated by JS -->
+        </div>
+        <div class="heatmap-legend">
+            <span>Meno</span>
+            <div class="legend-scale">
+                <span class="level-0"></span>
+                <span class="level-1"></span>
+                <span class="level-2"></span>
+                <span class="level-3"></span>
+                <span class="level-4"></span>
+            </div>
+            <span>Piu</span>
+        </div>
+    </section>
+
+    <!-- Section 6: Milestones -->
+    <section class="stats-section milestones-section">
+        <h3>I Tuoi Traguardi</h3>
+        <div class="milestones-container" id="milestones-container">
+            <!-- Generated by JS -->
+        </div>
+    </section>
+</div>
+
+<!-- Modal for Entry Details -->
+<div id="entry-modal" class="modal">
+    <div class="modal-content paper-modal">
+        <span class="close-modal">&times;</span>
+        <h2 id="modal-date">Data</h2>
+        <div id="modal-body" class="journal-text">
+            <!-- Content -->
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+{% endblock %}

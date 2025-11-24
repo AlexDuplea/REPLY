@@ -88,6 +88,7 @@ elements.saveBtn.addEventListener('click', async () => {
 
     elements.saveBtn.disabled = true;
     elements.saveBtn.textContent = 'Salvando...';
+    elements.saveBtn.classList.add('btn-pulse'); // Add pulse animation class if defined, or rely on CSS active state
 
     try {
         const response = await fetch('/api/save-entry', {
@@ -113,21 +114,26 @@ elements.saveBtn.addEventListener('click', async () => {
             elements.saveBtn.textContent = '✓ Salvato!';
             elements.saveBtn.style.background = 'var(--accent-green)';
 
+            // Trigger confetti or visual success here if needed
+
             setTimeout(() => {
                 elements.saveBtn.textContent = 'Salva';
                 elements.saveBtn.style.background = '';
                 elements.saveBtn.disabled = false;
+                elements.saveBtn.classList.remove('btn-pulse');
             }, 2000);
         } else {
             showToast('Errore nel salvataggio', 'error');
             elements.saveBtn.disabled = false;
             elements.saveBtn.textContent = 'Salva';
+            elements.saveBtn.classList.remove('btn-pulse');
         }
     } catch (error) {
         console.error('Error saving entry:', error);
         showToast('Errore di connessione', 'error');
         elements.saveBtn.disabled = false;
         elements.saveBtn.textContent = 'Salva';
+        elements.saveBtn.classList.remove('btn-pulse');
     }
 });
 
@@ -191,7 +197,10 @@ function addChatMessage(role, content) {
 
     const iconDiv = document.createElement('div');
     iconDiv.className = 'message-icon';
-    iconDiv.textContent = role === 'assistant' ? '🤖' : '👤';
+    // Use Phosphor icons for chat roles
+    iconDiv.innerHTML = role === 'assistant'
+        ? '<i class="ph-fill ph-robot"></i>'
+        : '<i class="ph-fill ph-user"></i>';
 
     const bubbleDiv = document.createElement('div');
     bubbleDiv.className = 'message-bubble';
@@ -382,7 +391,7 @@ function displayEntries(entries) {
     if (entries.length === 0) {
         entriesList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-icon">📝</div>
+                <div class="empty-icon"><i class="ph-duotone ph-pencil-slash"></i></div>
                 <div class="empty-text">Non hai ancora scritto nulla. <br>Inizia oggi il tuo diario!</div>
             </div>
         `;
@@ -393,7 +402,7 @@ function displayEntries(entries) {
         const entryDiv = document.createElement('div');
         entryDiv.className = 'entry-item';
         entryDiv.innerHTML = `
-            <div class="entry-date">📅 ${entry.date}</div>
+            <div class="entry-date"><i class="ph-bold ph-calendar-blank"></i> ${entry.date}</div>
             <div class="entry-text">${entry.entry}</div>
         `;
         entriesList.appendChild(entryDiv);
